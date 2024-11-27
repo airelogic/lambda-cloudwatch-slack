@@ -1,4 +1,6 @@
-var AWS = require('aws-sdk');
+const {
+  KMS,
+} = require("@aws-sdk/client-kms");
 var url = require('url');
 var https = require('https');
 var config = require('./config');
@@ -419,7 +421,7 @@ exports.handler = function(event, context) {
   } else if (config.kmsEncryptedHookUrl && config.kmsEncryptedHookUrl !== '<kmsEncryptedHookUrl>') {
     var encryptedBuf = new Buffer(config.kmsEncryptedHookUrl, 'base64');
     var cipherText = { CiphertextBlob: encryptedBuf };
-    var kms = new AWS.KMS();
+    var kms = new KMS();
 
     kms.decrypt(cipherText, function(err, data) {
       if (err) {
